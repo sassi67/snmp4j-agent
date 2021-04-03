@@ -1,5 +1,3 @@
-package com.compuware.apm.bigtest.extensions.util;
-
 import org.snmp4j.agent.mo.snmp.StorageType;
 import org.snmp4j.agent.mo.snmp.VacmMIB;
 import org.snmp4j.smi.OID;

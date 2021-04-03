@@ -1,12 +1,3 @@
-package com.compuware.apm.bigtest.extensions.util;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.snmp4j.agent.BaseAgent.STATE_RUNNING;
-
-import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.snmp4j.CommunityTarget;
@@ -19,12 +10,13 @@ import org.snmp4j.log.Log4jLogFactory;
 import org.snmp4j.log.LogFactory;
 import org.snmp4j.log.LogLevel;
 import org.snmp4j.mp.SnmpConstants;
-import org.snmp4j.smi.GenericAddress;
-import org.snmp4j.smi.Integer32;
-import org.snmp4j.smi.OID;
-import org.snmp4j.smi.OctetString;
-import org.snmp4j.smi.VariableBinding;
+import org.snmp4j.smi.*;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
+
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.snmp4j.agent.BaseAgent.STATE_RUNNING;
 
 public class SnmpAgentV2Test {
 
@@ -58,7 +50,7 @@ public class SnmpAgentV2Test {
 	public void testSnmpV2MultipleAgents() throws IOException {
     	// different agents can have the same address, but different ports
 		try (SnmpAgent snmpAgent1 = new SnmpAgentV2(snmpAgentCommunity, new MOScalar<>(oidSysUpTime, MOAccessImpl.ACCESS_READ_ONLY, oidSysUpTimeValue1));
-		SnmpAgent snmpAgent2 = new SnmpAgentV2(snmpAgentCommunity, new MOScalar<>(oidSysUpTime, MOAccessImpl.ACCESS_READ_ONLY, oidSysUpTimeValue2));) {
+		SnmpAgent snmpAgent2 = new SnmpAgentV2(snmpAgentCommunity, new MOScalar<>(oidSysUpTime, MOAccessImpl.ACCESS_READ_ONLY, oidSysUpTimeValue2))) {
 
 			ResponseEvent event1 = getResponseEvent(snmpAgent1.getPort());
 			assertNotNull(event1.getResponse());

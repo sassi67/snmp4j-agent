@@ -1,5 +1,3 @@
-package com.compuware.apm.bigtest.extensions.util;
-
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -31,8 +29,8 @@ public abstract class SnmpAgent extends BaseAgent implements Closeable {
 	protected SnmpAgentVacmViewTreeFamily vacmNotifyView = null;
 
 	public SnmpAgent(ManagedObject... objects) {
-		super(new File(ExtensionUtil.getTmpDir() + "/bootCounterFile.txt"),
-				new File(ExtensionUtil.getTmpDir() + "/configFile.txt"),
+		super(new File(System.getProperty("user.home") + "/bootCounterFile.txt"),
+				new File(System.getProperty("user.home") + "/configFile.txt"),
 				new CommandProcessor(new OctetString(MPv3.createLocalEngineID())));
 		this.objects = objects;
 	}

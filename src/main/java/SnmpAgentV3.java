@@ -1,5 +1,3 @@
-package com.compuware.apm.bigtest.extensions.util;
-
 import java.io.IOException;
 
 import org.snmp4j.agent.ManagedObject;
@@ -36,7 +34,6 @@ public class SnmpAgentV3 extends SnmpAgent {
         private String privProtocol;
         private String privPassword;
 
-        private Credentials() {}
         public Credentials(String userName, SecurityLevel securityLevel, String authProtocol, String authPassword,
                            String privProtocol, String privPassword) {
             this.userName = userName;
@@ -68,7 +65,7 @@ public class SnmpAgentV3 extends SnmpAgent {
         }
 
         public void setAuthProtocol(String authProtocol) {
-            if (this.authProtocol != authProtocol) {
+            if (!this.authProtocol.equals(authProtocol)) {
 				this.authProtocol = authProtocol;
 			}
         }
@@ -152,7 +149,7 @@ public class SnmpAgentV3 extends SnmpAgent {
 	}
 
 	public void setUserName(String userName) throws IOException {
-    	if (credentials.getUserName() != userName) {
+    	if (!credentials.getUserName().equals(userName)) {
     		credentials.setUserName(userName);
 			restart();
 		}

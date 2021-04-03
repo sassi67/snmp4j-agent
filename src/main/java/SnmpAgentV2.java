@@ -1,5 +1,3 @@
-package com.compuware.apm.bigtest.extensions.util;
-
 import java.io.IOException;
 
 import org.snmp4j.agent.ManagedObject;

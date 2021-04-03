@@ -1,24 +1,7 @@
-package com.compuware.apm.bigtest.extensions.util;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.snmp4j.agent.BaseAgent.STATE_RUNNING;
-
-import java.io.IOException;
-
-import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.snmp4j.CommandResponder;
-import org.snmp4j.CommandResponderEvent;
-import org.snmp4j.MessageException;
-import org.snmp4j.PDU;
-import org.snmp4j.ScopedPDU;
-import org.snmp4j.Snmp;
-import org.snmp4j.UserTarget;
+import org.snmp4j.*;
 import org.snmp4j.agent.mo.MOAccessImpl;
 import org.snmp4j.agent.mo.MOScalar;
 import org.snmp4j.event.ResponseEvent;
@@ -27,17 +10,15 @@ import org.snmp4j.log.LogFactory;
 import org.snmp4j.log.LogLevel;
 import org.snmp4j.mp.MPv3;
 import org.snmp4j.mp.SnmpConstants;
-import org.snmp4j.security.SecurityLevel;
-import org.snmp4j.security.SecurityModels;
-import org.snmp4j.security.SecurityProtocols;
-import org.snmp4j.security.USM;
-import org.snmp4j.security.UsmUser;
-import org.snmp4j.smi.GenericAddress;
-import org.snmp4j.smi.Integer32;
-import org.snmp4j.smi.OID;
-import org.snmp4j.smi.OctetString;
-import org.snmp4j.smi.VariableBinding;
+import org.snmp4j.security.*;
+import org.snmp4j.smi.*;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
+
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.snmp4j.agent.BaseAgent.STATE_RUNNING;
 
 public class SnmpAgentV3Test {
     private static final int SYSUPTIME = 1235810;
@@ -68,7 +49,6 @@ public class SnmpAgentV3Test {
     }
 
 	@Test
-	@Disabled
 	public void testSnmpV3ChangeUserNameAndRestart() throws IOException {
 
 		try (SnmpAgentV3 snmpAgent = new SnmpAgentV3(v3Credentials,
@@ -90,10 +70,7 @@ public class SnmpAgentV3Test {
 			// .. ensure that the port is unchanged
 			assertEquals(snmpAgentPort, snmpAgent.getPort());
 			// but the client with the old credentials is unable to get a response
-			Exception exceptionOnWrongUserName = Assertions.assertThrows(MessageException.class, () -> {
-				snmpClient.send(pdu, target);
-			});
-
+			Exception exceptionOnWrongUserName = Assertions.assertThrows(MessageException.class, () -> snmpClient.send(pdu, target));
 		}
 	}
 
